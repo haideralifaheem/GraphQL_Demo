@@ -12,12 +12,14 @@ import java.util.stream.Collectors;
 public class EpisodeRepository {
     Episode episode1 = new Episode(1, "Pilot", "December 2,2013", "S01E01");
     Episode episode2 = new Episode(2, "Lawnmower Dog", "December 9, 2013", "S01E02");
+    Episode episode3 = new Episode(3, "Anatomy Park", "December 16, 2013", "S01E03");
 
     ArrayList<Episode> episodes = new ArrayList<Episode>();
 
     public EpisodeRepository() {
         episodes.add(episode1);
         episodes.add(episode2);
+        episodes.add(episode3);
     }
 
     public Episode findById(int id) {
