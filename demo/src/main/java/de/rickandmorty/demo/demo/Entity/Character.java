@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
+import org.springframework.data.mongodb.core.mapping.DBRef;
+
 @Entity
 public class Character extends AbstractEntity {
 
@@ -31,16 +33,18 @@ public class Character extends AbstractEntity {
     private Location origin;
     private Location location;
     private String image;
-
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinTable(name = "character_episodes", joinColumns = {
-            @JoinColumn(name = "character_id", referencedColumnName = "id", nullable = false, updatable = false) }, inverseJoinColumns = {
-                    @JoinColumn(name = "episode_id", referencedColumnName = "id", nullable = false, updatable = false) })
     private ArrayList<Episode> episode;
 
     @JsonCreator
+    public Character() {
+        super("Character");
+        
+        this.setId(id);
+    }
+    @JsonCreator
     public Character(int id) {
         super("Character");
+        
         this.setId(id);
     }
 

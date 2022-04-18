@@ -3,11 +3,14 @@ package de.rickandmorty.demo.demo.Entity;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 
+@Entity
 public abstract class AbstractEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -16,8 +19,8 @@ public abstract class AbstractEntity {
 
    
     private String baseUrl="https://rickandmortyapi.com/Api";
-
-    private final String endPoint;
+    @Transient
+    private String endPoint;
 
     public AbstractEntity(String endpoint) {
         this.endPoint = endpoint;

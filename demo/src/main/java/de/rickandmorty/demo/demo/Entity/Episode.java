@@ -4,6 +4,8 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
+import org.springframework.data.mongodb.core.mapping.DBRef;
+
 @Entity
 public class Episode extends AbstractEntity {
 
@@ -12,6 +14,7 @@ public class Episode extends AbstractEntity {
     private String air_date;
     private String episode;
 
+    @DBRef
     @ManyToMany(mappedBy = "Episode", fetch = FetchType.LAZY)
     private Character[] residents;
 
@@ -54,6 +57,7 @@ public class Episode extends AbstractEntity {
     public void setEpisode(String episode) {
         this.episode = episode;
     }
+    
     @JsonCreator
     public Episode() {
         super("Episode");

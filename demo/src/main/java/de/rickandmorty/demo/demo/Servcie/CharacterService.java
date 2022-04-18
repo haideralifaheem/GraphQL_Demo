@@ -2,11 +2,13 @@ package de.rickandmorty.demo.demo.Servcie;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import de.rickandmorty.demo.demo.Entity.Character;
 import de.rickandmorty.demo.demo.Repository.CharacterRepository;
+import de.rickandmorty.demo.demo.Repository.MongoCurdRepository.CharacterCurdRepository;
 import io.leangen.graphql.annotations.GraphQLArgument;
 import io.leangen.graphql.annotations.GraphQLQuery;
 import io.leangen.graphql.execution.relay.Page;
@@ -17,6 +19,9 @@ import io.leangen.graphql.spqr.spring.annotations.GraphQLApi;
 public class CharacterService {
 
     private final CharacterRepository repo;
+    //@Autowired
+    CharacterCurdRepository curdRepo;
+
     public CharacterService(CharacterRepository repo) {
         this.repo = repo;
     }
@@ -24,6 +29,17 @@ public class CharacterService {
     @GraphQLQuery
     public Character CharacterbyId(int code) {
         return repo.findByID(code);
+    }
+
+    @GraphQLQuery
+    public List<Character> CurdCharacterbyname(String code) {
+        return curdRepo.findByNameContaining(code);
+    }
+
+    @GraphQLQuery
+    public Character CurdCharacterbyId(Integer code) {
+        repo.findByID(code);
+        return curdRepo.findById(code).orElse(null);
     }
 
     @GraphQLQuery

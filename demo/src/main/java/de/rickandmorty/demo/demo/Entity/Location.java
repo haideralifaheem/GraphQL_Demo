@@ -2,21 +2,19 @@ package de.rickandmorty.demo.demo.Entity;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
+import org.springframework.data.mongodb.core.mapping.DBRef;
+
 @Entity
 public class Location extends AbstractEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+   
     private String name;
     private String type;
     private String dimension;
+    @DBRef
     @ManyToMany(mappedBy = "Location", fetch = FetchType.LAZY)
     private Character[] residents;
 
@@ -55,10 +53,11 @@ public class Location extends AbstractEntity {
         super("Location");
     }
     @JsonCreator
-    public Location(String name,
+    public Location(int id,String name,
             String type,
             String dimension) {
         super("Location");
+        this.id=id;
         this.name = name;
         this.type = type;
         this.dimension = dimension;

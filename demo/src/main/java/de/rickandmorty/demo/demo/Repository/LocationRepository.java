@@ -10,9 +10,9 @@ import java.util.stream.Collectors;
 
 @Repository
 public class LocationRepository {
-    Location location1 = new Location("Citadel of Ricks", "Space Station", "unknown");
-    Location location2 = new Location("Abadango", "Cluster", "unknown");
-    Location location3 = new Location("Earth (C-137)", "Planet", "Dimension C-137");
+    Location location1 = new Location(1,"Citadel of Ricks", "Space Station", "unknown");
+    Location location2 = new Location(2,"Abadango", "Cluster", "unknown");
+    Location location3 = new Location(3,"Earth (C-137)", "Planet", "Dimension C-137");
 
 
     ArrayList<Location> locations = new ArrayList<Location>();

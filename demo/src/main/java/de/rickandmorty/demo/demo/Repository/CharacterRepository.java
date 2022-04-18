@@ -3,6 +3,7 @@ package de.rickandmorty.demo.demo.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -10,6 +11,9 @@ import de.rickandmorty.demo.demo.Entity.*;
 import de.rickandmorty.demo.demo.Entity.Character;
 import de.rickandmorty.demo.demo.Entity.Character.Gender;
 import de.rickandmorty.demo.demo.Entity.Character.Status;
+import de.rickandmorty.demo.demo.Repository.MongoCurdRepository.CharacterCurdRepository;
+import de.rickandmorty.demo.demo.Repository.MongoCurdRepository.EpisodeCurdRepository;
+import de.rickandmorty.demo.demo.Repository.MongoCurdRepository.LocationCurdRepository;
 import io.leangen.graphql.execution.relay.Page;
 import io.leangen.graphql.execution.relay.generic.PageFactory;
 
@@ -17,16 +21,27 @@ import io.leangen.graphql.execution.relay.generic.PageFactory;
 public class CharacterRepository {
         private final EpisodeRepository episodeRepository;
         private final LocationRepository locationRepository;
+        //@Autowired
+        CharacterCurdRepository CharCurdRepository;
+        //@Autowired
+        LocationCurdRepository LocCurdRepository;
+        //@Autowired
+        EpisodeCurdRepository EpisCurdRepository;
 
         public CharacterRepository(EpisodeRepository epRepo, LocationRepository locRepo) {
                 this.episodeRepository = epRepo;
                 this.locationRepository = locRepo;
+                
+                
         }
 
         public ArrayList<Character> GetData() {
-                ArrayList<Episode> episodes = episodeRepository.getEpisodes();
                 ArrayList<Character> data = new ArrayList<>();
-
+                ArrayList<Episode> episodes = episodeRepository.getEpisodes();
+                // save the indivual documents and then create reference
+                /*EpisCurdRepository.deleteAll();
+                EpisCurdRepository.saveAll(episodes);*/
+                
                 Character rickCharacter = new Character(1, "Rick Sanchez", Status.Alive, "Human", "", Gender.Male,
                                 locationRepository.findById(1),
                                 locationRepository.findById(1), "1.jpeg", episodes);
@@ -43,12 +58,15 @@ public class CharacterRepository {
                                 Gender.Female,
                                 locationRepository.findById(2),
                                 locationRepository.findById(2), "5.jpeg", episodes);
-                episodes.get(0).setResidents(new Character[] { rickCharacter, mortyCharacter, Character3 });
-                episodes.get(1).setResidents(new Character[] { rickCharacter, mortyCharacter });
+                episodes.get(0).setResidents(new Character[] { rickCharacter, mortyCharacter, Character3});
+                episodes.get(1).setResidents(new Character[] {  rickCharacter, mortyCharacter, Character3,Character4, Character5 });
                 episodes.get(2).setResidents(
                                 new Character[] { rickCharacter, mortyCharacter, Character3, Character4, Character5 });
-
+                
                 ArrayList<Location> locations = locationRepository.getLocations();
+                /*LocCurdRepository.deleteAll();
+                LocCurdRepository.saveAll(locations);*/
+                
                 locations.get(0).setResidents(new Character[] { rickCharacter, mortyCharacter });
                 locations.get(1).setResidents(
                                 new Character[] { rickCharacter, mortyCharacter, Character3, Character4 });
@@ -59,6 +77,8 @@ public class CharacterRepository {
                 data.add(Character3);
                 data.add(Character4);
                 data.add(Character5);
+                //CharCurdRepository.deleteAll();
+                //CharCurdRepository.saveAll(data);
                 return data;
 
         }
