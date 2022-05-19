@@ -21,27 +21,24 @@ import io.leangen.graphql.execution.relay.generic.PageFactory;
 public class CharacterRepository {
         private final EpisodeRepository episodeRepository;
         private final LocationRepository locationRepository;
-        //@Autowired
+        @Autowired
         CharacterCurdRepository CharCurdRepository;
-        //@Autowired
+        @Autowired
         LocationCurdRepository LocCurdRepository;
-        //@Autowired
+        @Autowired
         EpisodeCurdRepository EpisCurdRepository;
 
         public CharacterRepository(EpisodeRepository epRepo, LocationRepository locRepo) {
                 this.episodeRepository = epRepo;
                 this.locationRepository = locRepo;
-                
-                
+
         }
 
         public ArrayList<Character> GetData() {
                 ArrayList<Character> data = new ArrayList<>();
                 ArrayList<Episode> episodes = episodeRepository.getEpisodes();
-                // save the indivual documents and then create reference
-                /*EpisCurdRepository.deleteAll();
-                EpisCurdRepository.saveAll(episodes);*/
-                
+                // save the individual documents and then create reference
+
                 Character rickCharacter = new Character(1, "Rick Sanchez", Status.Alive, "Human", "", Gender.Male,
                                 locationRepository.findById(1),
                                 locationRepository.findById(1), "1.jpeg", episodes);
@@ -58,15 +55,19 @@ public class CharacterRepository {
                                 Gender.Female,
                                 locationRepository.findById(2),
                                 locationRepository.findById(2), "5.jpeg", episodes);
-                episodes.get(0).setResidents(new Character[] { rickCharacter, mortyCharacter, Character3});
-                episodes.get(1).setResidents(new Character[] {  rickCharacter, mortyCharacter, Character3,Character4, Character5 });
+                episodes.get(0).setResidents(new Character[] { rickCharacter, mortyCharacter, Character3 });
+                episodes.get(1).setResidents(
+                                new Character[] { rickCharacter, mortyCharacter, Character3, Character4, Character5 });
                 episodes.get(2).setResidents(
                                 new Character[] { rickCharacter, mortyCharacter, Character3, Character4, Character5 });
+
+                EpisCurdRepository.deleteAll();
+                EpisCurdRepository.saveAll(episodes);
                 
                 ArrayList<Location> locations = locationRepository.getLocations();
-                /*LocCurdRepository.deleteAll();
-                LocCurdRepository.saveAll(locations);*/
-                
+                LocCurdRepository.deleteAll();
+                LocCurdRepository.saveAll(locations);
+
                 locations.get(0).setResidents(new Character[] { rickCharacter, mortyCharacter });
                 locations.get(1).setResidents(
                                 new Character[] { rickCharacter, mortyCharacter, Character3, Character4 });
@@ -77,8 +78,10 @@ public class CharacterRepository {
                 data.add(Character3);
                 data.add(Character4);
                 data.add(Character5);
-                //CharCurdRepository.deleteAll();
-                //CharCurdRepository.saveAll(data);
+
+                CharCurdRepository.deleteAll();
+                CharCurdRepository.saveAll(data);
+
                 return data;
 
         }

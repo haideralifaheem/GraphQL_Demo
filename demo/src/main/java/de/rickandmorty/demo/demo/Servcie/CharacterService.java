@@ -19,7 +19,7 @@ import io.leangen.graphql.spqr.spring.annotations.GraphQLApi;
 public class CharacterService {
 
     private final CharacterRepository repo;
-    //@Autowired
+    @Autowired
     CharacterCurdRepository curdRepo;
 
     public CharacterService(CharacterRepository repo) {
